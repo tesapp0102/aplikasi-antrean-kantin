@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Antrean Kantin</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+<header class="hero">
+  <div class="hrow">
+    <div class="brand">
+      <svg class="logo" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="14" fill="#FFB703"/><path d="M10 20c0-8 6-13 14-13s14 5 14 13z" fill="#fff"/><rect x="9" y="20" width="30" height="5" rx="2.5" fill="#4F46E5"/><path d="M15 27h18l-2 12H17z" fill="#fff"/><path d="M20 30v6M24 30v6M28 30v6" stroke="#4F46E5" stroke-width="2" stroke-linecap="round"/></svg>
+      <div><h1>Antrean Kantin</h1><p>Pesan dari kelas, ambil saat siap</p></div>
+    </div>
+    <button class="out" id="staffBtn">Masuk staf</button>
+  </div>
+  <svg class="art" viewBox="0 0 260 120" aria-hidden="true"><circle cx="205" cy="38" r="30" fill="#FFB703" opacity=".9"/><rect x="20" y="62" width="220" height="50" rx="10" fill="#fff" opacity=".95"/><path d="M14 62 30 30h200l16 32z" fill="#FF6B4A"/><path d="M14 62h232a14 14 0 0 1-28 0 14 14 0 0 1-29 0 14 14 0 0 1-29 0 14 14 0 0 1-29 0 14 14 0 0 1-29 0 14 14 0 0 1-29 0 14 14 0 0 1-29 0 14 14 0 0 1-29 0z" fill="#fff"/><ellipse cx="75" cy="78" rx="26" ry="8" fill="#4F46E5"/><path d="M52 78a23 22 0 0 0 46 0z" fill="#6D63F5"/><path d="M68 62c-4-6 4-8 0-14M80 62c-4-6 4-8 0-14" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" opacity=".8"/><rect x="130" y="72" width="90" height="30" rx="6" fill="#EEF0FF"/><text x="175" y="94" text-anchor="middle" font-size="18" font-weight="800" fill="#4F46E5" font-family="sans-serif">A-012</text></svg>
+</header>
+<nav id="nav" role="tablist" aria-label="Menu utama">
+  <button data-v="pesan" aria-selected="true">Pesan</button>
+  <button data-v="saya" aria-selected="false">Antrean saya<i id="badge" hidden>0</i></button>
+  <button data-v="layar" aria-selected="false">Layar</button>
+  <button data-v="dapur" class="staff" aria-selected="false">Dapur</button>
+  <button data-v="menu" class="staff" aria-selected="false">Menu</button>
+  <button data-v="laporan" class="staff" aria-selected="false">Laporan</button>
+</nav>
+<div id="staffBar" class="card sbar" hidden><label for="selStan">Kantin yang dikelola</label><select id="selStan" class="in"></select></div>
+
+<section id="pesan" class="view on">
+  <div id="stanList"></div>
+  <div id="menuWrap" hidden></div>
+</section>
+<section id="saya" class="view"><div id="myList"></div></section>
+<section id="layar" class="view">
+  <div class="top"><h2>Layar antrean</h2><button class="btn sec" id="fs">Layar penuh</button></div>
+  <div id="board"></div>
+</section>
+<section id="dapur" class="view"><div id="dapurBox"></div></section>
+<section id="menu" class="view"><div id="menuBox"></div></section>
+<section id="laporan" class="view"><div id="lapBox"></div></section>
+</div>
+
+<div class="cbar" id="cbar" hidden><button id="cbtn"><span id="cN"></span><span id="cT"></span></button></div>
+
+<div class="ov" id="ovCo"><div class="modal" role="dialog" aria-modal="true" aria-label="Pesanan">
+  <h3>Pesananmu</h3>
+  <div id="coLines"></div>
+  <div class="two"><div><label for="cNama">Nama</label><input id="cNama" class="in" maxlength="40" placeholder="Nama kamu"></div>
+  <div><label for="cKelas">Kelas</label><input id="cKelas" class="in" maxlength="20" placeholder="XII RPL 1"></div></div>
+  <label for="cCat">Catatan (opsional)</label><input id="cCat" class="in" maxlength="120" placeholder="Contoh: tidak pedas">
+  <label>Pembayaran</label>
+  <div class="seg" id="cMet"><button class="on" data-m="Bayar di kantin">Bayar di kantin</button><button data-m="QRIS">QRIS</button></div>
+  <div class="change"><span>Total</span><b id="coTot">Rp0</b></div>
+  <div class="btns"><button class="btn" id="coGo">Pesan sekarang</button><button class="btn ghost" data-close>Kembali</button></div>
+</div></div>
+
+<div class="ov" id="ovTiket"><div class="modal" role="dialog" aria-modal="true" aria-label="Tiket antrean">
+  <div id="tiket"></div>
+  <div class="btns"><button class="btn" id="tiketGo">Pantau antreanku</button><button class="btn ghost" data-close>Tutup</button></div>
+</div></div>
+
+<div class="ov" id="ovMenu"><div class="modal" role="dialog" aria-modal="true" aria-label="Menu">
+  <h3 id="mjudul">Tambah menu</h3>
+  <div id="mStanWrap"><label for="mStan">Kantin</label><select id="mStan" class="in"></select></div>
+  <label for="mNama">Nama menu</label><input id="mNama" class="in" placeholder="Ayam geprek">
+  <div class="two"><div><label for="mEmoji">Ikon (emoji)</label><input id="mEmoji" class="in" maxlength="2" placeholder="🍗"></div>
+  <div><label for="mKat">Kategori</label><select id="mKat" class="in"><option>Makanan</option><option>Minuman</option><option>Snack</option></select></div></div>
+  <div class="two"><div><label for="mHarga">Harga</label><input id="mHarga" class="in" inputmode="numeric" placeholder="12000"></div>
+  <div><label for="mWaktu">Lama masak (menit)</label><input id="mWaktu" class="in" inputmode="numeric" placeholder="5"></div></div>
+  <label for="mFoto">Foto (boleh dikosongkan)</label><input id="mFoto" type="file" accept="image/*" class="in">
+  <img id="mPrev" alt="Pratinjau foto" style="display:none;width:90px;height:90px;object-fit:cover;border-radius:12px;margin-top:8px">
+  <div class="btns"><button class="btn" id="mSimpan">Simpan menu</button><button class="btn del" id="mHapus" style="display:none">Hapus menu</button><button class="btn ghost" data-close>Batal</button></div>
+</div></div>
+
+<div class="ov" id="ovStan"><div class="modal" role="dialog" aria-modal="true" aria-label="Kantin">
+  <h3 id="sjudul">Kantin</h3>
+  <label for="sNama">Nama kantin</label><input id="sNama" class="in">
+  <div class="two"><div><label for="sEmoji">Ikon (emoji)</label><input id="sEmoji" class="in" maxlength="2" placeholder="🍛"></div>
+  <div><label for="sKode">Kode huruf</label><input id="sKode" class="in" maxlength="1" placeholder="A"></div></div>
+  <label for="sWarna">Warna kantin</label><input id="sWarna" type="color" class="in" value="#4F46E5" style="height:48px;padding:4px">
+  <div class="btns"><button class="btn" id="sSimpan">Simpan kantin</button><button class="btn ghost" data-close>Batal</button></div>
+</div></div>
+
+<div class="ov" id="ovLogin"><div class="modal" role="dialog" aria-modal="true" aria-label="Masuk staf" style="text-align:center">
+  <h3>Masuk staf kantin</h3>
+  <label for="lu" style="text-align:left">Nama pengguna</label><input id="lu" class="in" autocomplete="username">
+  <label for="lp" style="text-align:left">Kata sandi</label><input id="lp" type="password" class="in" autocomplete="current-password">
+  <div id="lerr" role="alert"></div>
+  <div class="btns"><button class="btn" id="masuk">Masuk</button><button class="btn ghost" data-close>Batal</button></div>
+  <p class="hint">Admin: admin / admin123<br>Penjual: rina / rina123, joko / joko123, segar / segar123</p>
+</div></div>
+<div class="toast" id="toast" role="status"></div>
+<script src="app.js"></script>
+</body>
+</html>
